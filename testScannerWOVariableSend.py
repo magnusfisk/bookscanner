@@ -62,8 +62,6 @@ connectTries = 1
 
 
 
-
-
 while connected != True:
     connected = estabConnection()
     if connectTries == 5:
