@@ -7,6 +7,8 @@ import time
 import serial
 
 from os.path import expanduser
+from imageCrop import imageCrop
+
 userDir = expanduser("~")
 
 
@@ -89,8 +91,14 @@ for pageID in range (0, bookLength):
 
 
 
-#if pageID==bookLength:
-	#merge to pdf
+if pageID==(bookLength-1):
+    cropDone = imageCrop(pageWidth, pageHeight, bookLength)
+    if cropDone:
+        os.system("convert *crop.jpg" + bookTitle + ".pdf")
+        
+    else:
+        print "Failed to crop images"
+
 print "reset"
 arduinoCom.write('9')
 print arduinoCom.readline()
