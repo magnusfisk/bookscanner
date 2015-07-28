@@ -19,6 +19,7 @@ def imageCrop(pageWidth, pageHeight, bookLength):
         img = PM.Image(str(pageID + ".jpg")
         img.rotate(180)
         img.crop(cropArea)
-        
+        img.write(pageID + "crop.jpg")
+
 
     
