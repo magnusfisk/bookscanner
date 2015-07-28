@@ -1,3 +1,8 @@
 Bookscanner with automatic pageturn
 
+Dependencies 
+gPhoto2
+pySerial
+
+
 Created by Magnus Axelson-Fisk
