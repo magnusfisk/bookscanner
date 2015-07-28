@@ -72,20 +72,19 @@ while connected != True:
 
 
 for pageID in range (0, bookLength):
-	if pageTurned == True:
+    if pageTurned == True:
         os.system("gphoto2 --capture-image-and-download")
         os.rename("capt0000.jpg", pageID + ".jpg")
-            
-		arduinoCom.write('1')
-		time.sleep(1)
-		inputStr = arduinoCom.readline()
-		pageTurned = bool(inputStr[:1])
-		print pageID 
-		print pageTurned
-	else:
-		failedConnection(pageID)
-		break
-		
+        arduinoCom.write('1')
+        time.sleep(1)
+        inputStr = arduinoCom.readline()
+        pageTurned = bool(inputStr[:1])
+        print pageID
+        print pageTurned
+    else:
+        failedConnection(pageID)
+        break
+
 
 
 
