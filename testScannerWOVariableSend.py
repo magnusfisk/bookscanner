@@ -6,10 +6,9 @@ import os
 import time
 import serial
 
-from os.path import expanduser
 from imageCrop import imageCrop
 
-userDir = expanduser("~")
+userDir = os.path.expanduser("~")
 
 
 arduinoCom = serial.Serial()
@@ -76,7 +75,7 @@ while connected != True:
 for pageID in range (0, bookLength):
     if pageTurned == True:
         os.system("gphoto2 --capture-image-and-download")
-        os.rename("capt0000.jpg", pageID + ".jpg")
+        os.rename("capt0000.jpg", str(pageID) + ".jpg")
         arduinoCom.write('1')
         time.sleep(1)
         inputStr = arduinoCom.readline()
@@ -94,8 +93,8 @@ for pageID in range (0, bookLength):
 if pageID==(bookLength-1):
     cropDone = imageCrop(pageWidth, pageHeight, bookLength)
     if cropDone:
-        os.system("convert *crop.jpg" + bookTitle + ".pdf")
-        
+        os.system("convert *crop.jpg " + bookTitle + ".pdf")
+        os.remove
     else:
         print "Failed to crop images"
 
