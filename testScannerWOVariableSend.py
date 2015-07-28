@@ -22,7 +22,7 @@ def failedConnection(pageID):
 
 
 
-#establish connection to arduino and makes sure pageturntime and holdtime ar set as 0
+#establish connection to arduino
 #returns true if arduino reset function is executed
 def estabConnection():
     while True:
@@ -40,6 +40,23 @@ def estabConnection():
     inputStr = arduinoCom.readline()
     connected = bool(inputStr[:1])
     return connected
+
+#function for croping and merges pages, deletes the cropped photos
+def pageScanComplete(pagewidth, pageHeight, bookLength, bookTitle):
+    
+    cropDone = imageCrop(pageWidth, pageHeight, bookLength)
+    if cropDone:
+        os.system("convert *crop.jpg " + bookTitle + ".pdf")
+        
+    else:
+        print "Failed to crop images"
+    
+    bookDir = os.path.expanduser("~") + "/" + bookTitle
+    fileEnding = "crop.jpg"
+    fileList = os.listdir(bookDir)
+    for i in range(0, len(fileList)):
+        if fileList[i].endswith(fileEnding):
+            os.remove(bookDir + "/" + fileList[i])
 
 
 while True:
@@ -62,7 +79,7 @@ connected = False
 connectTries = 1
 
 
-
+#connects to arduino, if not successful on 5 tries breaks and calls end function
 while connected != True:
     connected = estabConnection()
     if connectTries == 5:
@@ -71,7 +88,7 @@ while connected != True:
     connectTries = connectTries + 1
 
 
-
+#takes picture of page and calls for arduino to turn page
 for pageID in range (0, bookLength):
     if pageTurned == True:
         os.system("gphoto2 --capture-image-and-download")
@@ -89,14 +106,9 @@ for pageID in range (0, bookLength):
 
 
 
-
+#when all pages has been turned call for function to crop and merge pages
 if pageID==(bookLength-1):
-    cropDone = imageCrop(pageWidth, pageHeight, bookLength)
-    if cropDone:
-        os.system("convert *crop.jpg " + bookTitle + ".pdf")
-        os.remove
-    else:
-        print "Failed to crop images"
+    pageScanComplete(pageWidth,pageHeight,bookLength,bookTitle)
 
 print "reset"
 arduinoCom.write('9')
