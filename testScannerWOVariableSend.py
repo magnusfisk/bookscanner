@@ -67,9 +67,26 @@ while True:
         break
     except OSError:
         print "Mappen finns redan, byt namn"
-bookLength = int(raw_input('Antal sidor som ska skannas '))
-pageWidth = int(raw_input('Bredden pa sidorna '))
-pageHeight = int(raw_input('Hojden pa sidorna '))
+while True:
+    try:
+        bookLength = int(raw_input('Antal sidor som ska skannas '))
+        break
+    except ValueError:
+        print "Forsok igen med siffror"
+
+while True:
+    try:
+        pageWidth = int(raw_input('Bredden pa sidorna '))
+        break
+    except ValueError:
+        print "Forsok igen med siffror"
+
+while True:
+    try:
+        pageHeight = int(raw_input('Hojden pa sidorna '))
+        break
+    except ValueError:
+        print "Forsok igen med siffror"
 os.chdir(bookDir)
 
 
