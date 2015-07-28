@@ -4,6 +4,7 @@
 
 import PythonMagick as PM
 
+
 def imageCrop(pageWidth, pageHeight, bookLength):
     pixPerCm = 14
     pageID = 0
@@ -16,10 +17,15 @@ def imageCrop(pageWidth, pageHeight, bookLength):
 
     
     for pageID in range(0,bookLength):
-        img = PM.Image(str(pageID + ".jpg")
-        img.rotate(180)
+        img = PM.Image(str(pageID) + ".jpg")
+        img.rotate(180.0)
         img.crop(cropArea)
         img.write(pageID + "crop.jpg")
-
-
+    if pageID == (bookLength - 1):
+        return True
+    else:
+        return False
     
+
+
+
